@@ -8,7 +8,7 @@ pipeline {
             steps {
                 script {
                     def app = docker.build("sanu28221/dev_branch:latest")
-                    docker.withRegistry('https://hub.docker.com/repository/docker/sanu28221/', 'DEV_DOC_CREADS') {
+                    docker.withRegistry('https://docker.io/sanu28221/', 'DEV_DOC_CREADS') {
                         docker.image("sanu28221/dev_branch:latest").push()
                     }
                 }
@@ -21,7 +21,7 @@ pipeline {
             }
             steps {
                 script {
-                    docker.withRegistry('https://hub.docker.com/repository/docker/sanu28221/', 'DEV_DOC_CREADS') {
+                    docker.withRegistry('https://docker.io/sanu28221/', 'DEV_DOC_CREADS') {
                         docker.image("sanu28221/dev_branch:latest").pull()
                     }
                 }
@@ -29,7 +29,7 @@ pipeline {
                 sh 'echo Tagging Docker image from Dev to QA'
                 sh "docker tag sanu28221/dev_branch:latest  sanu28221/qa_branch:latest" 
                 script {
-                    docker.withRegistry('https://hub.docker.com/repository/docker/sanu28221/', 'QA_DOC_CREADS') {
+                    docker.withRegistry('https://docker.io/sanu28221/', 'QA_DOC_CREADS') {
                         docker.image("sanu28221/qa_branch:latest").push()
                     }
                 }
