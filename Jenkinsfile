@@ -8,8 +8,8 @@ pipeline {
             steps {
                 script {
                     def app = docker.build("sanu28221/dev_branch:latest")
-                    docker.withRegistry('https://hub.docker.com/repository/docker/sanu28221/dev_branch/general', 'DEV_DOC_CREADS') {
-                        app.push()
+                    docker.withRegistry('https://hub.docker.com/repository/docker/sanu28221/dev_branch', 'DEV_DOC_CREADS') {
+                        docker.image("sanu28221/dev_branch:latest").push()
                     }
                 }
                 sh 'echo Image Pushed to DEV'
@@ -21,7 +21,7 @@ pipeline {
             }
             steps {
                 script {
-                    docker.withRegistry('https://hub.docker.com/repository/docker/sanu28221/dev_branch/general', 'DEV_DOC_CREADS') {
+                    docker.withRegistry('https://hub.docker.com/repository/docker/sanu28221/dev_branch', 'DEV_DOC_CREADS') {
                         docker.image("sanu28221/dev_branch:latest").pull()
                     }
                 }
