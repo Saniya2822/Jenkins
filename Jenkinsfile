@@ -9,7 +9,9 @@ pipeline {
             steps {
                 script {
                     def app = docker.build("sanu28221/dev_branch:latest")
-                    docker.image("sanu28221/dev_branch:latest").push()
+                    docker.withRegistry('https://index.docker.io/v1/', 'DEV_DOC_CREADS') {
+                        docker.image("sanu28221/dev_branch:latest").push()
+                    }
                 }
                 echo 'Image Pushed to DEV'
             }
