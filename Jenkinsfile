@@ -9,7 +9,7 @@ pipeline {
             steps {
                 script {
                     def app = docker.build("sanu28221/dev_branch:latest")
-                    app.push()
+                    docker.image("sanu28221/dev_branch:latest").push()
                 }
                 echo 'Image Pushed to DEV'
             }
