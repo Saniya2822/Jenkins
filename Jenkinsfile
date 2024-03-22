@@ -8,7 +8,7 @@ pipeline {
             steps {
                 script {
                     def app = docker.build("sanu28221/dev_branch:latest")
-                    docker.withRegistry('https://hub.docker.com/repository/docker/sanu28221/dev_branch/general', 'DEV_DOC_CREADS') {
+                    docker.withRegistry('https://registry.hub.docker.com', 'DEV_DOC_CREADS') {
                         app.push()
                     }
                 }
