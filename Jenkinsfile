@@ -9,7 +9,7 @@ pipeline {
             steps {
                 script {
                     def app = docker.build("sanu28221/dev_branch:latest")
-                    docker.withRegistry('https://registry.hub.docker.com/sanu28221/dev_branch', 'DEV_DOC_CREADS') {
+                    docker.withRegistry('https://registry.hub.docker.com/sanu28221/', 'DEV_DOC_CREADS') {
                         app.push()
                     }
                 }
@@ -23,7 +23,7 @@ pipeline {
             steps {
                 script {
                     def app = docker.build("sanu28221/dev_branch:latest")
-                    docker.withRegistry('https://registry.hub.docker.com/sanu28221/qa_branch', 'QA_DOC_CREADS') {
+                    docker.withRegistry('https://registry.hub.docker.com/sanu28221/', 'QA_DOC_CREADS') {
                         app.push()
                     }
                 }
