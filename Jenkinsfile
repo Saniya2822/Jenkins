@@ -8,39 +8,36 @@ pipeline {
             steps {
                 script {
                     def app = docker.build("sanu28221/dev_branch:latest")
-                    docker.withRegistry('https://registry.hub.docker.com/sanu28221/', 'DEV_DOC_CREADS') {
-                        docker.image("sanu28221/dev_branch:latest").push()
+                    docker.withRegistry('https://registry.hub.docker.com', 'DEV_DOC_CREADS') {
+                        app.push()
                     }
                 }
-                sh 'echo Image Pushed to DEV'
+                echo 'Image Pushed to DEV'
             }
         }
-        stage('Pull Tag push Docker Image to QA') {
+        stage('Pull, Tag, and Push Docker Image to QA') {
             when {
                 branch 'QA'
             }
             steps {
                 script {
-                    docker.withRegistry('https://registry.hub.docker.com/sanu28221/', 'DEV_DOC_CREADS') {
+                    docker.withRegistry('https://registry.hub.docker.com', 'DEV_DOC_CREADS') {
                         docker.image("sanu28221/dev_branch:latest").pull()
                     }
-                }
-                sh 'echo Image pull from DEV Branch'
-                sh 'echo Tagging Docker image from Dev to QA'
-                sh "docker tag sanu28221/dev_branch:latest  sanu28221/qa_branch:latest" 
-                script {
-                    docker.withRegistry('https://registry.hub.docker.com/sanu28221/', 'QA_DOC_CREADS') {
+                    echo 'Image pulled from DEV Branch'
+                    sh 'docker tag sanu28221/dev_branch:latest sanu28221/qa_branch:latest'
+                    docker.withRegistry('https://registry.hub.docker.com', 'QA_DOC_CREADS') {
                         docker.image("sanu28221/qa_branch:latest").push()
                     }
                 }
-                sh 'echo Image Pushed to QA'
+                echo 'Image Pushed to QA'
             }
         }
     }
-    post { 
-        always { 
+    post {
+        always {
             echo 'Deleting Project now !! '
-            deleteDir()
+            deleteDir() // This deletes the entire workspace directory, use with caution.
         }
     }
 }
